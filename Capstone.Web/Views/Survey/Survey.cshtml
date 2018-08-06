@@ -1,0 +1,114 @@
+﻿@model Capstone.Web.Models.Survey
+@using Capstone.Web.Models
+
+@{
+    ViewBag.Title = "Survey";
+
+    List<SelectListItem> parkNames = new List<SelectListItem>();
+    foreach (Park item in Session["ParkCodesAndNames"] as List<Park>)
+    {
+        SelectListItem park = new SelectListItem { Text = item.ParkName, Value = item.ParkCode };
+        parkNames.Add(park);
+    }
+
+    List<SelectListItem> activityLevels = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Inactive" },
+        new SelectListItem { Text = "Sedentary" },
+        new SelectListItem { Text = "Active" },
+        new SelectListItem { Text = "Extremely Active" }
+    };
+
+    List<SelectListItem> statesInUSA = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "Alabama"},
+        new SelectListItem() {Text = "Alaska"},
+        new SelectListItem() {Text = "Arizona"},
+        new SelectListItem() {Text = "Arkansas"},
+        new SelectListItem() {Text = "California"},
+        new SelectListItem() {Text = "Colorado"},
+        new SelectListItem() {Text = "Connecticut"},
+        new SelectListItem() {Text = "District of Columbia"},
+        new SelectListItem() {Text = "Delaware"},
+        new SelectListItem() {Text = "Florida"},
+        new SelectListItem() {Text = "Georgia"},
+        new SelectListItem() {Text = "Hawaii"},
+        new SelectListItem() {Text = "Idaho"},
+        new SelectListItem() {Text = "Illinois"},
+        new SelectListItem() {Text = "Indiana"},
+        new SelectListItem() {Text = "Iowa"},
+        new SelectListItem() {Text = "Kansas"},
+        new SelectListItem() {Text = "Kentucky"},
+        new SelectListItem() {Text = "Louisiana"},
+        new SelectListItem() {Text = "Maine"},
+        new SelectListItem() {Text = "Maryland"},
+        new SelectListItem() {Text = "Massachusetts"},
+        new SelectListItem() {Text = "Michigan"},
+        new SelectListItem() {Text = "Minnesota"},
+        new SelectListItem() {Text = "Mississippi"},
+        new SelectListItem() {Text = "Missouri"},
+        new SelectListItem() {Text = "Montana"},
+        new SelectListItem() {Text = "Nebraska"},
+        new SelectListItem() {Text = "Nevada"},
+        new SelectListItem() {Text = "New Hampshire"},
+        new SelectListItem() {Text = "New Jersey"},
+        new SelectListItem() {Text = "New Mexico"},
+        new SelectListItem() {Text = "New York"},
+        new SelectListItem() {Text = "North Carolina"},
+        new SelectListItem() {Text = "North Dakota"},
+        new SelectListItem() {Text = "Ohio"},
+        new SelectListItem() {Text = "Oklahoma"},
+        new SelectListItem() {Text = "Oregon"},
+        new SelectListItem() {Text = "Pennsylvania"},
+        new SelectListItem() {Text = "Rhode Island"},
+        new SelectListItem() {Text = "South Carolina"},
+        new SelectListItem() {Text = "South Dakota"},
+        new SelectListItem() {Text = "Tennessee"},
+        new SelectListItem() {Text = "Texas"},
+        new SelectListItem() {Text = "Utah"},
+        new SelectListItem() {Text = "Vermont"},
+        new SelectListItem() {Text = "Virginia"},
+        new SelectListItem() {Text = "Washington"},
+        new SelectListItem() {Text = "West Virginia"},
+        new SelectListItem() {Text = "Wisconsin"},
+        new SelectListItem() {Text = "Wyoming"}
+    };
+}
+<div class="survey-header">
+
+    <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+    <h2>Vote for your favorite National Park!</h2>
+    <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+
+</div>
+
+<div class="survey">
+
+    @using (Html.BeginForm("Survey", "Survey", FormMethod.Post))
+    {
+        <div class="survey-form">
+            <div class="row">
+                <div class="label">@Html.LabelFor(m => m.ParkCode)</div>
+                <div class="box">@Html.DropDownListFor(m => m.ParkCode, parkNames, new { style = "width: 100%;" })</div>
+                <div class="message">@Html.ValidationMessageFor(m => m.ParkCode)</div>
+            </div>
+            <div class="row">
+                <div class="label">@Html.LabelFor(m => m.EmailAddress)</div>
+                <div class="box">@Html.TextBoxFor(m => m.EmailAddress, new { style = "width: 100%;" })</div>
+                <div class="message">@Html.ValidationMessageFor(m => m.EmailAddress)</div>
+            </div>
+            <div class="row">
+                <div class="label">@Html.LabelFor(m => m.ResidenceState)</div>
+                <div class="box">@Html.DropDownListFor(m => m.ResidenceState, statesInUSA, new { style = "width: 100%;" })</div>
+                <div class="message">@Html.ValidationMessageFor(m => m.ResidenceState)</div>
+            </div>
+            <div class="row">
+                <div class="label">@Html.LabelFor(m => m.ActivityLevel)</div>
+                <div class="box">@Html.DropDownListFor(m => m.ActivityLevel, activityLevels, new { style = "width: 100%;" })</div>
+                <div class="message">@Html.ValidationMessageFor(m => m.ActivityLevel)</div>
+            </div>
+        </div>
+        <button>Submit My Vote!</button>
+    }
+
+</div>

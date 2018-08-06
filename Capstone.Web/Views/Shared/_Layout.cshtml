@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPGeek - @ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <div class="header">
+        <span class="logo">
+            <a href="@Url.Action("Index", "Home")"><img alt="National Park Geek" src="@Url.Content("~/Content/img/logo.png")" /></a>
+        </span>
+        <span class="backpackpic">
+            <a href="@Url.Action("Index", "Home")"><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+        </span>
+        <span class="navigation">
+            <a href="@Url.Action("Index", "Home")">View All Parks</a>
+            <a href="@Url.Action("Survey", "Survey")">Take A Survey</a>
+            <a href="@Url.Action("FavoriteParks", "Home")">View Favorite Parks</a>
+        </span>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+</body>
+
+</html>

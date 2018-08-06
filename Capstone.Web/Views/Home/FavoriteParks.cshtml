@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Capstone.Web.Models.Park>
+
+@{
+    ViewBag.Title = "Favorite National Parks";
+}
+
+<div class="favorite-parks">
+
+    <div class="favorites-header">
+        <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+        <h2>Favorite Parks</h2>
+        <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+    </div>
+
+    <div class="favorite-body">
+        <table class="table">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParkName)
+                </th>
+                <th class="space"></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SurveyCount)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="park-name">
+                        @Html.DisplayFor(model => item.ParkName)
+                    </td>
+                    <td></td>
+                    <td>
+                        @Html.DisplayFor(model => item.SurveyCount)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>

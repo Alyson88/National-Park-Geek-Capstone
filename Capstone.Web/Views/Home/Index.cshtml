@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Capstone.Web.Models.Park>
+
+@{
+    ViewBag.Title = "List of National Parks";
+}
+
+<div class="list-header">
+    <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+    <h2>List of National Parks</h2>
+    <a><img alt="Backpack" src="@Url.Content("~/Content/img/backpack1.png")" /></a>
+</div>
+
+    <p2>Click on a park to view more details</p2>
+
+<div class="list-body">
+
+    @foreach (var item in Model)
+    {
+        <a href="@Url.Action("ParkDetail", "Home", new { Id = item.ParkCode, viewTempIn=(Session["fahrenheitOrCelsius"] as string) })">
+
+            <div class="park">
+                <div class="park-name">
+                    @Html.DisplayFor(modelItem => item.ParkName)
+                </div>
+                <div class="image-and-desc">
+                    <div class="park-image">
+                        <img alt="@item.ParkName" src="@Url.Content("~/Content/parks/" + @item.ParkCode + ".jpg")" />
+                    </div>
+                    <div class="park-description">
+                        @Html.DisplayFor(modelItem => item.ParkDescription)
+                    </div>
+                </div>
+            </div>
+
+        </a>
+    }
+
+</div>

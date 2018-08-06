@@ -1,0 +1,129 @@
+﻿@model Capstone.Web.Models.Park
+@using Capstone.Web.Models
+
+@{
+    ViewBag.Title = Model.ParkName + " Details";
+}
+
+<div class="detail-header">
+    <h2>@Model.ParkName</h2>
+    <p>"@Model.InspirationalQuote" <br /> ~ @Model.InspirationalQuoteSource ~</p>
+</div>
+
+<div class="detail-body">
+    <div class="selected-park">
+
+        <div class="park-image-data">
+            <div class="park-image">
+                <img alt="@Model.ParkName" src="@Url.Content("~/Content/parks/" + @Model.ParkCode + ".jpg")" />
+            </div>
+            <div class="park-data">
+                <ul>
+                    <li>Founded in <b>@Model.YearFounded</b></li>
+                    <li>Located in <b>@Model.ParkState</b></li>
+                    <li>Land: <b>@Model.Acreage.ToString("N0") acres</b></li>
+                    <li>Climate: <b>@Model.Climate</b></li>
+                    <li>Elevation: <b>@Model.ElevationInFeet.ToString("N0") feet</b></li>
+                    <li>Trails: <b>@Model.MilesOfTrail.ToString("N0") miles</b></li>
+                    <li>Animals: <b>@Model.NumberOfAnimalSpecies.ToString("N0") species</b></li>
+                    <li>Campsites: <b>@Model.NumberOfCampsites.ToString("N0")</b></li>
+                    <li>Visitors: <b>@Model.AnnualVisitorCount.ToString("N0") annually</b></li>
+
+                    @if (Model.EntryFeeInDollars == 0)
+                    {
+                        <li>There is no entry fee</li>
+                    }
+                    else
+                    {
+                        <li>Entry fee is <b>@Model.EntryFeeInDollars.ToString("c")</b></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="park-description">
+            <p>@Html.DisplayFor(model => model.ParkDescription)</p>
+        </div>
+
+    </div>
+
+    <div class="weather">
+
+        <div class="weather-header">
+            <h3>Five-Day Forecast</h3>
+
+            @if (Request.QueryString["viewTempIn"] == null || Request.QueryString["viewTempIn"] == "fahrenheit")
+            {
+                Session["fahrenheitOrCelsius"] = "fahrenheit";
+                <a href="?viewTempIn=celsius">View In Celsius</a>
+            }
+            else if (Request.QueryString["viewTempIn"] == "celsius")
+            {
+                Session["fahrenheitOrCelsius"] = "celsius";
+                <a href="?viewTempIn=fahrenheit">View In Fahrenheit</a>
+            }
+        </div>
+
+        <div class="weather-body">
+            @foreach (var forecast in Model.FiveDayForecast)
+            {
+                <div class="container">
+                    <div class="forecast-day">
+                        @if (forecast.FiveDayForecastValue == 1)
+                        {
+                            <h2>@forecast.ForecastDate</h2>
+                        }
+                        else
+                        {
+                            <h3>@forecast.ForecastDate</h3>
+                        }
+                    </div>
+
+                    <div class="forecast-label">
+                        <h4>@forecast.ForecastDisplay</h4>
+                    </div>
+
+                    @if (Session["fahrenheitOrCelsius"] as string == "fahrenheit")
+                    {
+                        <div class="high-low" style="background: url(@Url.Content("~/Content/weather/"+forecast.Forecast+".jpg"));">
+                            <div class="high">
+                                High: @forecast.HighTempInFahrenheit°F<br />
+                            </div>
+                            <div class="low">
+                                Low: @forecast.LowTempInFahrenheit°F
+                            </div>
+                        </div>
+                    }
+                    else if (Session["fahrenheitOrCelsius"] as string == "celsius")
+                    {
+                        <div class="high-low" style="background: url(@Url.Content("~/Content/weather/"+forecast.Forecast+".jpg"));">
+                            <div class="high">
+                                High: @forecast.GetHighTempInCelsius(forecast.HighTempInFahrenheit)°C<br />
+                            </div>
+                            <div class="low">
+                                Low: @forecast.GetLowTempInCelsius(forecast.LowTempInFahrenheit)°C
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="high-low" style="background: url(@Url.Content("~/Content/weather/"+forecast.Forecast+".jpg"));">
+                            <div class="high">
+                                High = N/A
+                            </div>
+                            <div class="low">
+                                Low = N/A
+                            </div>
+                        </div>
+                    }
+
+                    <div class="recommendation">
+                        <b>Recommendation(s)</b>:<br />
+                        @forecast.Recommendations
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
